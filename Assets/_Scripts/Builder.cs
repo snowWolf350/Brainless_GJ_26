@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-public class Builder : MonoBehaviour, IPointerEnterHandler
+public class Builder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     NavMeshAgent _navAgent;
     Fence _currentFence;
+
+    [SerializeField] GameObject _hoverGameObject;
 
     private void Start()
     {
@@ -26,6 +28,11 @@ public class Builder : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("entered");
+        _hoverGameObject.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _hoverGameObject.SetActive(false);
     }
 }
