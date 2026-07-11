@@ -1,0 +1,38 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Player : MonoBehaviour
+{
+    Vector3 mouseWorldPosition = Vector3.zero;
+
+    [SerializeField] LayerMask aimLayer;
+
+    private void Start()
+    {
+        GameInput.Instance.OnLeftClick += GameInput_OnLeftClick;
+    }
+    private void OnDestroy()
+    {
+        GameInput.Instance.OnLeftClick -= GameInput_OnLeftClick;
+    }
+
+
+    private void GameInput_OnLeftClick(object sender, System.EventArgs e)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 99f, aimLayer))
+        {
+            mouseWorldPosition = raycastHit.point;
+
+            if (raycastHit.transform.TryGetComponent(out Builder builder))
+            {
+                Debug.Log("Clicked a builder");
+            }
+            if (raycastHit.transform.TryGetComponent(out Fence fence))
+            {
+                Debug.Log("Clicked a fence");
+            }
+        }
+    }
+
+}
