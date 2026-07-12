@@ -15,15 +15,20 @@ public class Builder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void SendBuilderToFence(Fence fence)
     {
-        if(fence.FenceIsOccuppied())
+        if(fence.FenceIsOccuppiedByBot())
         {
             Debug.Log("Fence occupied cant send here");
             return;
         }
 
+        if (_currentFence != null)
+        {
+            _currentFence.SetCurrentBuilder(null);
+        }
+
         _currentFence = fence;
         _currentFence.SetCurrentBuilder(this);
-        _navAgent.SetDestination(fence.transform.position);
+        _navAgent.SetDestination(fence.GetPlayerBotTransform().position);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

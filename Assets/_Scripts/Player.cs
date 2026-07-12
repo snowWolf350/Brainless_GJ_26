@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     {
         GameInput.Instance.OnLeftClick += GameInput_OnLeftClick;
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         GameInput.Instance.OnLeftClick -= GameInput_OnLeftClick;
     }
@@ -28,12 +28,10 @@ public class Player : MonoBehaviour
 
             if (raycastHit.transform.TryGetComponent(out Builder builder))
             {
-                Debug.Log("Clicked a builder");
                 _selectedBuilder = builder;
             }
             if (raycastHit.transform.TryGetComponent(out Fence fence))
             {
-                Debug.Log("Clicked a fence");
                 if (_selectedBuilder == null)
                 {
                     //there is no selected builder just fence he selected

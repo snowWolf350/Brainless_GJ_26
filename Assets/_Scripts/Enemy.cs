@@ -49,7 +49,6 @@ public class Enemy : MonoBehaviour
                     _attackTimer = 0;
                     int damage = Random.Range(_minDamage, _maxDamage + 1);
                     _targetFence.TakeDamage(damage);
-                    Debug.Log("Cracking Fence :)");
                 }
                 break;
         }

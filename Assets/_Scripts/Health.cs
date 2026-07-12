@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 public class Health 
 {
     float _maxHealth;
@@ -24,7 +25,10 @@ public class Health
     {
         return (float)_currentHealth / _maxHealth;
     }
-
+    public void Heal(float healAmount)
+    {
+        _currentHealth += healAmount;
+    }
     public void TakeDamage(float damageAmount)
     {
         _currentHealth -= damageAmount;

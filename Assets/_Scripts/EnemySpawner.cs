@@ -11,6 +11,11 @@ public class EnemySpawner : MonoBehaviour
     float _spawnTimer;
     float _spawnTimerMax = 4;
 
+    private void Awake()
+    {
+        _availibleFencesList = new List<Fence>();
+    }
+
     private void Update()
     {
         _spawnTimer += Time.deltaTime;
@@ -23,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
 
             foreach (Fence _fence in _fenceList)
             {
-                if (_fence.FenceIsOccuppied())
+                if (_fence.FenceIsTargetedByEnemy())
                 {
                     continue;
                 }
@@ -34,8 +39,10 @@ public class EnemySpawner : MonoBehaviour
 
             Fence fence;
 
-
-            fence = _availibleFencesList[Random.Range(0, _fenceList.Count)];
+            if (_availibleFencesList.Count > 1)
+                fence = _availibleFencesList[Random.Range(0, _availibleFencesList.Count)];
+            else
+                fence = _availibleFencesList[0];
 
             fence.SetFenceIsTargeted(true);
             
