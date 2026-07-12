@@ -324,6 +324,37 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6829558406536662844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4790913718081717576}
+  m_Layer: 3
+  m_Name: ShootTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4790913718081717576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829558406536662844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4523197687958284825}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7273522714510393360
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +600,7 @@ Transform:
   - {fileID: 1939846022821055871}
   - {fileID: 6922986635964267794}
   - {fileID: 1398626201990138848}
+  - {fileID: 4790913718081717576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8445617423965024433
@@ -608,6 +640,7 @@ MonoBehaviour:
   _playerBotTransform: {fileID: 6922986635964267794}
   _enemySpawnTransform: {fileID: 7934972768767285504}
   _enemyTargetTranform: {fileID: 2939052785047125583}
+  _shootTranform: {fileID: 4790913718081717576}
 --- !u!208 &2146290173466872678
 NavMeshObstacle:
   m_ObjectHideFlags: 0

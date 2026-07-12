@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.AI;
-
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IHasProgress
 {
     Fence _targetFence;
 
@@ -14,24 +12,22 @@ public class Enemy : MonoBehaviour
     EnemyState _currentEnemyState;
 
     Transform _fenceTransform;
-    Vector3 SpawnPos;
 
     float _attackTimer;
     float _attackTimerMax = 4;
-    float _moveSpeed = 2;
+    float _moveSpeed = 0.5f;
     
 
     int _maxDamage = 20;
     int _minDamage = 10;
 
     Health _enemyHealth;
+
+    public event System.EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
+
     private void Awake()
     {
         _enemyHealth = new Health(100);
-    }
-    private void Start()
-    {
-        SpawnPos = transform.position;
     }
 
     private void Update()
@@ -63,6 +59,12 @@ public class Enemy : MonoBehaviour
         if (collision.transform.TryGetComponent(out Bullet bullet))
         {
             _enemyHealth.TakeDamage(bullet.GetDamageAmount());
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+            {
+                ProgressNormalized = _enemyHealth.GetHealthNormalized()
+            });
+
+            Destroy(bullet.gameObject);
         }
     }
     public void SetFence(Fence fence)

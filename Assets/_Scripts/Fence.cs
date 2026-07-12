@@ -12,9 +12,12 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     [SerializeField] Transform _playerBotTransform;
     [SerializeField] Transform _enemySpawnTransform;
     [SerializeField] Transform _enemyTargetTranform;
+    [SerializeField] Transform _shootTranform;
 
     bool _fenceIsTargeted;
     bool _botIsInTrigger;
+
+    float _yShootOffset;
 
 
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
@@ -23,7 +26,10 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     {
         _fenceHealth = new Health(100);
     }
-
+    private void Start()
+    {
+        _yShootOffset = _shootTranform.position.y;
+    }
     private void Update()
     {
         if (_botIsInTrigger == false) return;
@@ -98,6 +104,24 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     public Transform GetEnemyTaregetTransform()
     {
         return _enemyTargetTranform;
+    }
+    public Transform GetShootTransform()
+    {
+        return _shootTranform;
+    }
+    public Vector3 GetAimDirection()
+    {
+        Vector3 aimDir;
+
+        aimDir = ((_enemySpawnTransform.position + new Vector3(0, _yShootOffset, 0))- _shootTranform.position).normalized;
+
+        Debug.DrawLine(
+    _shootTranform.position,
+    _shootTranform.position + aimDir * 10f,
+    Color.red,
+    99
+);
+        return aimDir;
     }
     public bool FenceIsTargetedByEnemy()
     {
