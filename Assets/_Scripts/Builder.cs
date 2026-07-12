@@ -11,6 +11,7 @@ public class Builder : Bot
 
     public override void Task()
     {
+        if (GetCurrentFence().GetFenceHealth().GetHealthNormalized() == 1) return;
         _fixTimer += Time.deltaTime;
         if (_fixTimer > _fixTimerMax)
         {

@@ -10,7 +10,7 @@ public class BuilderTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.TryGetComponent(out Builder builder))
+        if (other.transform.TryGetComponent(out Bot bot))
         {
             _parentFence.BuilderEntered();
         }
@@ -18,7 +18,7 @@ public class BuilderTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.TryGetComponent(out Builder builder))
+        if (other.transform.TryGetComponent(out Bot bot))
         {
             _parentFence.BuilderExited();
         }

@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour
     int _maxDamage = 20;
     int _minDamage = 10;
 
+    Health _enemyHealth;
+    private void Awake()
+    {
+        _enemyHealth = new Health(100);
+    }
     private void Start()
     {
         SpawnPos = transform.position;
@@ -53,7 +58,13 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.TryGetComponent(out Bullet bullet))
+        {
+            _enemyHealth.TakeDamage(bullet.GetDamageAmount());
+        }
+    }
     public void SetFence(Fence fence)
     {
         _targetFence = fence;

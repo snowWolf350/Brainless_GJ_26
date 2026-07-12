@@ -23,17 +23,17 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     {
         _fenceHealth = new Health(100);
     }
+
     private void Update()
     {
         if (_botIsInTrigger == false) return;
-
-        if (_fenceHealth.GetHealthNormalized() == 1) return;
-
         if (_currentBot == null) return;
         //fence health is low and builder is inside the trigger
 
         _currentBot.Task();
     }
+
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         _hoverGameObject.SetActive(true);
@@ -111,6 +111,11 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
             return true;
         }
         return false;
+    }
+
+    public Health GetFenceHealth()
+    {
+        return _fenceHealth;
     }
     #endregion
 }
