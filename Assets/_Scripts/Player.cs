@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
                     return;
                 }
                 _selectedBot.SendBotToFence(fence);
+                _selectedBot = null;
                 return;
             }
 
