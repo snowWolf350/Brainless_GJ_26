@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] LayerMask aimLayer;
 
-    Builder _selectedBuilder;
+    Bot _selectedBot;
 
     private void Start()
     {
@@ -26,18 +26,26 @@ public class Player : MonoBehaviour
         {
             mouseWorldPosition = raycastHit.point;
 
-            if (raycastHit.transform.TryGetComponent(out Builder builder))
+            if (raycastHit.transform.TryGetComponent(out Bot bot))
             {
-                _selectedBuilder = builder;
+                _selectedBot = bot;
+                return;
             }
             if (raycastHit.transform.TryGetComponent(out Fence fence))
             {
-                if (_selectedBuilder == null)
+                if (_selectedBot == null)
                 {
                     //there is no selected builder just fence he selected
                     return;
                 }
-                _selectedBuilder.SendBuilderToFence(fence);
+                _selectedBot.SendBotToFence(fence);
+                return;
+            }
+
+            //not a fence is clicked nor a bot is clicked
+            if(_selectedBot != null)
+            {
+                _selectedBot.SendBotToPosition(mouseWorldPosition);
             }
         }
     }

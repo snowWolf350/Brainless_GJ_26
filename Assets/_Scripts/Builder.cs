@@ -1,43 +1,22 @@
+
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.EventSystems;
-public class Builder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+
+public class Builder : Bot
 {
-    NavMeshAgent _navAgent;
-    Fence _currentFence;
 
-    [SerializeField] GameObject _hoverGameObject;
+    float _fixAmount = 10;
+    float _fixTimer;
+    float _fixTimerMax = 2;
 
-    private void Start()
+
+    public override void Task()
     {
-        _navAgent = GetComponent<NavMeshAgent>();
-    }
-
-    public void SendBuilderToFence(Fence fence)
-    {
-        if(fence.FenceIsOccuppiedByBot())
+        _fixTimer += Time.deltaTime;
+        if (_fixTimer > _fixTimerMax)
         {
-            Debug.Log("Fence occupied cant send here");
-            return;
+            _fixTimer = 0;
+            
+            GetCurrentFence().HealHealth(_fixAmount);
         }
-
-        if (_currentFence != null)
-        {
-            _currentFence.SetCurrentBuilder(null);
-        }
-
-        _currentFence = fence;
-        _currentFence.SetCurrentBuilder(this);
-        _navAgent.SetDestination(fence.GetPlayerBotTransform().position);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _hoverGameObject.SetActive(true);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _hoverGameObject.SetActive(false);
     }
 }

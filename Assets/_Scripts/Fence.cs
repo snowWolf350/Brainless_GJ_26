@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,7 +6,7 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
 {
     Health _fenceHealth;
 
-    Builder _currentBuilder;
+    Bot _currentBot;
 
     [SerializeField] GameObject _hoverGameObject;
     [SerializeField] Transform _playerBotTransform;
@@ -18,11 +14,8 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     [SerializeField] Transform _enemyTargetTranform;
 
     bool _fenceIsTargeted;
-    bool _builderIsInTrigger;
+    bool _botIsInTrigger;
 
-    float _fixAmount = 10;
-    float _fixTimer;
-    float _fixTimerMax = 2;
 
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
 
@@ -32,23 +25,14 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     }
     private void Update()
     {
-        if (_builderIsInTrigger == false) return;
+        if (_botIsInTrigger == false) return;
 
         if (_fenceHealth.GetHealthNormalized() == 1) return;
 
+        if (_currentBot == null) return;
         //fence health is low and builder is inside the trigger
 
-        _fixTimer += Time.deltaTime;
-        if (_fixTimer > _fixTimerMax)
-        {
-            _fixTimer = 0;
-            _fenceHealth.Heal(_fixAmount);
-
-            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-            {
-                ProgressNormalized = _fenceHealth.GetHealthNormalized()
-            });
-        }
+        _currentBot.Task();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -58,6 +42,15 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     public void OnPointerExit(PointerEventData eventData)
     {
         _hoverGameObject.SetActive(false);
+    }
+    public void HealHealth(float healAmount)
+    {
+        _fenceHealth.Heal(healAmount);
+
+        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+        {
+            ProgressNormalized = _fenceHealth.GetHealthNormalized()
+        });
     }
 
     public void TakeDamage(float damage)
@@ -73,18 +66,17 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     
     public void BuilderEntered()
     {
-        _builderIsInTrigger = true;
+        _botIsInTrigger = true;
     }
     public void BuilderExited()
     {
-        _builderIsInTrigger = false;
-        _fixTimer = 0;
+        _botIsInTrigger = false;
     }
 
     #region|___SETTERS___|
-    public void SetCurrentBuilder(Builder builder)
+    public void SetCurrentBot(Bot bot)
     {
-        _currentBuilder = builder;
+        _currentBot = bot;
     }
 
     public void SetFenceIsTargeted(bool value)
@@ -114,7 +106,7 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
 
     public bool FenceIsOccuppiedByBot()
     {
-        if (_currentBuilder != null)
+        if (_currentBot != null)
         {
             return true;
         }
