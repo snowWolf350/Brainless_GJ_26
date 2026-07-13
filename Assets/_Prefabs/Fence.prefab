@@ -547,6 +547,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fence
   _hoverGameObject: {fileID: 8560497422088138864}
+  _fenceFullHealth: {fileID: 3133827797004150726, guid: 4d186c6434a7c0b4ab7e9c391a878070, type: 3}
+  _fenceHalfHealth: {fileID: 5458823718288188921, guid: 5a0d0575ead381546885a9237e8054ff, type: 3}
+  _fenceQuarterHealth: {fileID: 7087475094305888464, guid: 277339a6f79d7b047b735bbe8e715a87, type: 3}
+  _currentFenceVisual: {fileID: 5588627508009783555}
   _playerBotTransform: {fileID: 6922986635964267794}
   _enemySpawnTransform: {fileID: 7934972768767285504}
   _enemyTargetTranform: {fileID: 2939052785047125583}
@@ -627,5 +631,10 @@ PrefabInstance:
 --- !u!4 &5099512627174181817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2321121185143537020, guid: 4d186c6434a7c0b4ab7e9c391a878070, type: 3}
+  m_PrefabInstance: {fileID: 7418375114515494597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5588627508009783555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3133827797004150726, guid: 4d186c6434a7c0b4ab7e9c391a878070, type: 3}
   m_PrefabInstance: {fileID: 7418375114515494597}
   m_PrefabAsset: {fileID: 0}

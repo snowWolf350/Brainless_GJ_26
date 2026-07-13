@@ -8,7 +8,14 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
 
     Bot _currentBot;
 
+    [Header("visual GameObjects")]
     [SerializeField] GameObject _hoverGameObject;
+    [SerializeField] GameObject _fenceFullHealth;
+    [SerializeField] GameObject _fenceHalfHealth;
+    [SerializeField] GameObject _fenceQuarterHealth;
+    [SerializeField] GameObject _currentFenceVisual;
+
+    [Header("Transforms")]
     [SerializeField] Transform _playerBotTransform;
     [SerializeField] Transform _enemySpawnTransform;
     [SerializeField] Transform _enemyTargetTranform;
@@ -53,9 +60,27 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     {
         _fenceHealth.Heal(healAmount);
 
+        float health = _fenceHealth.GetHealthNormalized();
+
+        if (health < 0.75f && health > 0.55f)
+        {
+            if (_currentFenceVisual == _fenceHalfHealth) return;
+
+            Destroy(_currentFenceVisual);
+
+            _currentFenceVisual = Instantiate(_fenceHalfHealth, transform);
+        }
+        if (health > 0.75)
+        {
+            if (_currentFenceVisual == _fenceFullHealth) return;
+
+            Destroy(_currentFenceVisual);
+
+            _currentFenceVisual = Instantiate(_fenceFullHealth, transform);
+        }
         OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
         {
-            ProgressNormalized = _fenceHealth.GetHealthNormalized()
+            ProgressNormalized = health
         });
     }
 
@@ -63,10 +88,29 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     {
         _fenceHealth.TakeDamage(damage);
 
-        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+        float health = _fenceHealth.GetHealthNormalized();
+
+        if (health < 0.75f && health > 0.55f)
         {
-            ProgressNormalized = _fenceHealth.GetHealthNormalized()
-        });
+            if (_currentFenceVisual == _fenceHalfHealth) return;
+
+            Destroy(_currentFenceVisual);
+
+            _currentFenceVisual = Instantiate(_fenceHalfHealth,transform);
+        }
+        if (health < 0.55f)
+        {
+            if (_currentFenceVisual == _fenceQuarterHealth) return;
+
+            Destroy(_currentFenceVisual);
+
+            _currentFenceVisual = Instantiate(_fenceQuarterHealth, transform);
+        }
+
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+            {
+                ProgressNormalized = _fenceHealth.GetHealthNormalized()
+            });
     }
 
     
