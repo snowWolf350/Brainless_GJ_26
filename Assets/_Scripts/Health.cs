@@ -28,6 +28,10 @@ public class Health
     public void Heal(float healAmount)
     {
         _currentHealth += healAmount;
+        if( _currentHealth > _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+        }
     }
     public void TakeDamage(float damageAmount)
     {

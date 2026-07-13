@@ -9,7 +9,10 @@ public class EnemySpawner : MonoBehaviour
     List<Fence> _availibleFencesList;
 
     float _spawnTimer;
-    float _spawnTimerMax = 4;
+    float _spawnTimerMax = 10;
+    float _spawnTimerMin = 6;
+
+    float _spawnWaitTime = 2;
 
     private void Awake()
     {
@@ -20,10 +23,10 @@ public class EnemySpawner : MonoBehaviour
     {
         _spawnTimer += Time.deltaTime;
 
-        if(_spawnTimer > _spawnTimerMax )
+        if(_spawnTimer > _spawnWaitTime)
         {
             _spawnTimer = 0;
-
+            _spawnWaitTime = Random.Range(_spawnTimerMin, _spawnTimerMax);
             _availibleFencesList.Clear();
 
             foreach (Fence _fence in _fenceList)

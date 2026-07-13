@@ -10,6 +10,7 @@ public class Bot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Fence _currentFence;
 
     [SerializeField] GameObject _hoverGameObject;
+    [SerializeField] GameObject _selectedGameObject;
 
     private void Start()
     {
@@ -50,7 +51,14 @@ public class Bot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
 
-
+    public void EnableSelectedVisual()
+    {
+        _selectedGameObject.SetActive(true);
+    }
+    public void DisableSelectedVisual()
+    {
+        _selectedGameObject.SetActive(false);
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

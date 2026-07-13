@@ -28,7 +28,13 @@ public class Player : MonoBehaviour
 
             if (raycastHit.transform.TryGetComponent(out Bot bot))
             {
+                if (_selectedBot != null)
+                {
+                    _selectedBot.DisableSelectedVisual();
+                }
+
                 _selectedBot = bot;
+                _selectedBot.EnableSelectedVisual();
                 return;
             }
             if (raycastHit.transform.TryGetComponent(out Fence fence))
@@ -39,6 +45,7 @@ public class Player : MonoBehaviour
                     return;
                 }
                 _selectedBot.SendBotToFence(fence);
+                _selectedBot.DisableSelectedVisual();
                 _selectedBot = null;
                 return;
             }

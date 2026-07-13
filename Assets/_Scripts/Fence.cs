@@ -115,12 +115,6 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
 
         aimDir = ((_enemySpawnTransform.position + new Vector3(0, _yShootOffset, 0))- _shootTranform.position).normalized;
 
-        Debug.DrawLine(
-    _shootTranform.position,
-    _shootTranform.position + aimDir * 10f,
-    Color.red,
-    99
-);
         return aimDir;
     }
     public bool FenceIsTargetedByEnemy()

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Shooter : Bot
 {
     float _shootTimer;
-    float _shootTimerMax = 1.5f;
+    float _shootTimerMax = 1f;
     float _shootForce = 40;
 
     [SerializeField] Transform _shootTransform;

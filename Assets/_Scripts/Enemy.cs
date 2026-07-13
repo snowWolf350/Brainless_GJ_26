@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour, IHasProgress
     float _moveSpeed = 0.5f;
     
 
-    int _maxDamage = 20;
+    int _maxDamage = 15;
     int _minDamage = 10;
 
     Health _enemyHealth;
@@ -28,6 +28,20 @@ public class Enemy : MonoBehaviour, IHasProgress
     private void Awake()
     {
         _enemyHealth = new Health(100);
+    }
+
+    private void Start()
+    {
+        _enemyHealth.onDeath += _enemyHealth_onDeath;
+    }
+    private void OnDestroy()
+    {
+        _enemyHealth.onDeath -= _enemyHealth_onDeath;
+    }
+    private void _enemyHealth_onDeath(object sender, System.EventArgs e)
+    {
+        _targetFence.SetFenceIsTargeted(false);
+        Destroy(gameObject);
     }
 
     private void Update()
