@@ -84,4 +84,9 @@ public class GameManager : MonoBehaviour
         }
             OnGameStateChanged?.Invoke(this, new OnGameStateEventArgs { setState = setGameState });
     }
+
+    public void Unpause()
+    {
+        SetGameState(GameState.Playing);
+    }
 }
