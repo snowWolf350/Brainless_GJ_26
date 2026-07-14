@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     List<Fence> _availibleFencesList;
 
     float _spawnTimer;
-    float _spawnTimerMax = 10;
+    float _spawnTimerMax = 8;
     float _spawnTimerMin = 6;
 
     float _spawnWaitTime = 2;

@@ -21,6 +21,8 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     [SerializeField] Transform _enemyTargetTranform;
     [SerializeField] Transform _shootTranform;
 
+    [SerializeField] ParticleSystem _shootParticles;
+
     bool _fenceIsTargeted;
     bool _botIsInTrigger;
 
@@ -178,6 +180,11 @@ public class Fence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IH
     public Health GetFenceHealth()
     {
         return _fenceHealth;
+    }
+
+    public ParticleSystem GetShootParticle()
+    {
+        return _shootParticles;
     }
     #endregion
 }

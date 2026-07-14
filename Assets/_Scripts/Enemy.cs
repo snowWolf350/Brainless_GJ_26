@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 public class Enemy : MonoBehaviour, IHasProgress
 {
     Fence _targetFence;
 
+    [SerializeField] GameObject _damageParticles;
+    [SerializeField] GameObject _damageText;
     enum EnemyState
     {
         walking,
@@ -72,7 +75,14 @@ public class Enemy : MonoBehaviour, IHasProgress
     {
         if (collision.transform.TryGetComponent(out Bullet bullet))
         {
-            _enemyHealth.TakeDamage(bullet.GetDamageAmount());
+            int damage = bullet.GetRandomDamageAmount();
+
+            Instantiate(_damageParticles, collision.GetContact(0).point, Quaternion.identity);
+
+
+            _damageText.GetComponent<PlayDamageEffect>().PlayTextEffect(damage);
+
+            _enemyHealth.TakeDamage(damage);
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
                 ProgressNormalized = _enemyHealth.GetHealthNormalized()

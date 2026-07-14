@@ -6,7 +6,7 @@ public class Shooter : Bot
     float _shootTimerMax = 1f;
     float _shootForce = 40;
 
-    [SerializeField] Transform _shootTransform;
+    Transform _shootTransform;
     [SerializeField] GameObject _bullet;
     private void Update()
     {
@@ -23,6 +23,8 @@ public class Shooter : Bot
         if (_shootTimer > _shootTimerMax)
         {
             _shootTimer = 0;
+            GetCurrentFence().GetShootParticle().Play();
+
             Vector3 aimDir = GetCurrentFence().GetAimDirection();
             GameObject bullet = Instantiate(_bullet, 
                 GetCurrentFence().GetShootTransform().position,
